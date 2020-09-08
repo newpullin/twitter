@@ -92,3 +92,5 @@ def timeline(user_id):
         'user_id' : user_id,
         'timeline': timeline
     })
+
+# not finish yet.. because this program don't have DB
