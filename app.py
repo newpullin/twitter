@@ -78,3 +78,10 @@ def unfollow():
 
     return jsonify(user)
     
+
+@app.route('/timeline/<int:user_id>', methods=['GET'])
+def timeline(user_id):
+    if user_id not in app.users:
+        return 'no user', 400
+    
+    follow_list = app.users[user_id].get('follow', set())
