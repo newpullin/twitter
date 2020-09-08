@@ -1,7 +1,13 @@
 from flask import Flask, jsonify, request
 from flask.json import JSONEncoder
 
-class CustomJsonEncoder(JSONEncoder):
+
+"""
+Default JSON encoder는 set를 JSON으로 변환할 수 없다.
+그러므로 커스텀 엔코더를 작성해서 set을 list로 변환하여
+JSON으로 변환 가능하게 해주어야 한다.
+"""
+class CustomJSONEncoder(JSONEncoder):
     def default(self, obj):
         if isinstance(obj, set):
             return list(obj)
@@ -12,7 +18,7 @@ app = Flask(__name__)
 app.users = {}
 app.tweets = []
 app.id_count = 1
-app.json_encoder = CustomJsonEncoder
+app.json_encoder = CustomJSONEncoder
 
 @app.route("/ping", methods=['GET'])
 def ping():
@@ -33,7 +39,7 @@ def sign_up():
 def tweet():
     payload = request.json
     user_id = int(payload['id'])
-    tweet = payload('tweet')
+    tweet = payload['tweet']
 
     if user_id not in app.users:
         return "no user", 400
