@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask.json import JSONEncoder
-
+from sqlalchemy import create_engine, text
 
 """
 Default JSON encoder는 set를 JSON으로 변환할 수 없다.
@@ -8,14 +8,26 @@ Default JSON encoder는 set를 JSON으로 변환할 수 없다.
 JSON으로 변환 가능하게 해주어야 한다.
 """
 class CustomJSONEncoder(JSONEncoder):
-    def default(self, obj):
+    def default(self, obj):## not finish yet.. because this program don't have DB not finish yet.. because this program don't have DB
         if isinstance(obj, set):
             return list(obj)
         
         return JSONEncoder.default(self, obj)
+
+def create_app(test_config = None):
+    app = Flask(__name__)
+
+    if test_config is None:
+        app.config.from_pyfile("config.py")
+    else:
+        app.config.update(test_config)
+
+    database = create_engine(app.config['DB_URL'], encoding = "utf-8", max_overflow = 0)
+    app.database = database
+
+    return app
     
-app = Flask(__name__)
-app.users = {}
+    app.users = {}
 app.tweets = []
 app.id_count = 1
 app.json_encoder = CustomJSONEncoder
@@ -99,4 +111,4 @@ def timeline(user_id):
         'timeline': timeline
     })
 
-# not finish yet.. because this program don't have DB
+
