@@ -1,0 +1,11 @@
+FLASK_APP=app.py FLASK_DEBUG=1 flask run
+
+
+sign-up
+
+http -v POST "http://localhost:5000/sign-up" name=nys email=newpullin@gmail.com password=test1234 profile="Hello"
+http -v POST localhost:5000/login email=new@gmail.com password=test1234
+
+http -v POST localhost:5000/tweet tweet="hello world" "Authorization:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo0LCJleHAiOjE2MDA3NzY3OTZ9.Wq1MsuXsChqIFNd7JhDghUrlzgC0MluXlcfFaXNh4rQ"
+
+python-backend-test.cm7jr9gmw1un.ap-northeast-2.rds.amazonaws.com
